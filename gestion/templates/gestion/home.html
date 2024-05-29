@@ -1,0 +1,13 @@
+{% extends 'gestion/base.html' %}
+{% block content %}
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <div class="card w-50 mb-3">
+            <div class="card-body">
+                <h5 class="card-title text-center mb-3">Bienvenidos a Te lo vendo store</h5>
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'gestion:login' %}" class="btn btn-secondary btn-sm ">Ir a inicio de sesión</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

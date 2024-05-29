@@ -1,0 +1,13 @@
+{% extends 'gestion/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-4">
+                <h3 class="mt-4 mb-3 text-center">Sesión cerrada con éxito</h3>
+                <div class="d-flex justify-content-center">
+                    <a href="{% url 'gestion:home' %}" class="btn btn-secondary mt-3">Volver al Inicio</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

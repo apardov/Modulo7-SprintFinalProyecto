@@ -1,0 +1,78 @@
+{% extends 'gestion/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container w-50 mt-5 bg-light rounded-4">
+        <div class="row d-flex justify-content-between p-3">
+            <div class="col-2">
+                <a class="btn btn-secondary btn-block btn-sm" href="{% url 'gestion:authenticated' %}">Volver</a>
+            </div>
+            <div class="col-6 text-end">
+                {% if request.user.is_superuser or request.user.is_staff %}
+                    <a class="btn btn-secondary btn-sm"
+                       href="{% url 'gestion:status' order_detail.pedido.numero_pedido %}">Cambiar
+                        Estado
+                        Pedido</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="p-3">
+            <h3 class="text-center">Detalle de Pedido</h3>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Cliente</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default"
+                       value="{{ order_detail.pedido.cliente.nombre_completo }}" disabled>
+            </div>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-1">N° Pedido</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default"
+                       value="{{ order_detail.pedido.numero_pedido }}" disabled>
+            </div>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Fecha compra</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default"
+                       value="{{ order_detail.pedido.fecha| date }}" disabled>
+            </div>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Importe pagado</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default"
+                       value="{{ order_detail.pedido.forma_pago }}" disabled>
+            </div>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Importe pagado</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default"
+                       value="{{ order_detail.producto.precio }}" disabled>
+            </div>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Productos</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default"
+                       value="{{ order_detail.producto.nombre }}" disabled>
+            </div>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-2">Estado Pedido</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default" value="{{ order_detail.pedido.estado }}" disabled>
+            </div>
+            <div class="input-group mb-3 mt-3">
+                <span class="input-group-text w-25" id="inputGroup-sizing-default-3">Dirección envio</span>
+                <input type="text" class="form-control" aria-label="Sizing example input"
+                       aria-describedby="inputGroup-sizing-default" value="{{ order_detail.pedido.direccion_entrega }}"
+                       disabled>
+            </div>
+            {% if order_detail.producto.imagen %}
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Imagen Producto</span>
+                    <div class="form-control text-center">
+                        <img class="w-50" src="data:image/jpeg;base64,{{ order_detail.producto.imagen_base64 }}"
+                             alt="Imagen del producto">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

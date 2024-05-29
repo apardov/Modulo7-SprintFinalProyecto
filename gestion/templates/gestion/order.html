@@ -1,0 +1,59 @@
+{% extends 'gestion/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+    <div class="container w-50 mt-5 bg-light rounded-4">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row d-flex justify-content-between p-3">
+
+                <div class="col-2">
+                    <a class="btn btn-secondary btn-block btn-sm" href="{% url 'gestion:authenticated' %}">Volver</a>
+                </div>
+
+                <div class="col-6 text-end">
+                    <button class="btn btn-secondary btn-sm" type="submit">Crear pedido</button>
+                </div>
+            </div>
+            <div class="p-3">
+                <h3 class="text-center">Crear Pedido</h3>
+                {% if is_superuser_or_staff %}
+                    <div class="input-group mb-3 mt-3">
+                        <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Cliente</span>
+                        {% render_field take_order_form.cliente class='form-select' %}
+                    </div>
+                {% else %}
+                    <div class="input-group mb-3 mt-3">
+                        <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Cliente</span>
+                        <input type="text" class="form-control" name="cliente" value="{{ request.user.email }}"
+                               readonly>
+                        <input type="hidden" name="cliente" value="{{ request.user.id }}">
+                    </div>
+                {% endif %}
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Producto</span>
+                    {% render_field take_order_form.producto class='form-select' id='id_producto' %}
+                </div>
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Dirección</span>
+                    {% render_field take_order_form.direccion_entrega class='form-control' rows='2' %}
+                </div>
+                <div class="input-group mb-3 mt-3">
+                    <span class="input-group-text w-25" id="inputGroup-sizing-default-1">Forma de pago</span>
+                    {% render_field take_order_form.forma_pago class='form-select' %}
+                </div>
+                {% if take_order_form.errors %}
+                    <div class="alert alert-danger">
+                        Por favor, corrige los siguientes errores:
+                        <ul>
+                            {% for field in take_order_form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}
